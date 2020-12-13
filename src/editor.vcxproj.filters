@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\include">
+      <UniqueIdentifier>{d743941f-1695-4bbc-b7ba-cb818b97da0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\include\imgui">
+      <UniqueIdentifier>{2f06f5fc-812f-48fe-9680-3574672c8b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\launcher">
+      <UniqueIdentifier>{d93b9072-44cb-4f7c-8318-ea52822b2e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\displays">
+      <UniqueIdentifier>{23994364-dec4-48e7-861f-5a4df4e7b373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\studio">
+      <UniqueIdentifier>{f2a34079-5ded-4fd2-9c28-c2b0dc378afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\viewer">
+      <UniqueIdentifier>{39b04f5b-c416-4284-9582-fd69b57d4d03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\include\GLFW">
+      <UniqueIdentifier>{406c938d-1938-4a82-9e02-e945c2c8ce4e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="include\imgui\imgui_demo.cpp">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_draw.cpp">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_impl_opengl2.cpp">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui.cpp">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="include\mathlib.c">
+      <Filter>Source Files\include</Filter>
+    </ClCompile>
+    <ClCompile Include="studio\studio_render.cpp">
+      <Filter>Source Files\studio</Filter>
+    </ClCompile>
+    <ClCompile Include="studio\studio_utils.cpp">
+      <Filter>Source Files\studio</Filter>
+    </ClCompile>
+    <ClCompile Include="include\imgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="launcher\main.cpp">
+      <Filter>Source Files\launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="viewer\viewer_interface.cpp">
+      <Filter>Source Files\viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="launcher\main_display.cpp">
+      <Filter>Source Files\launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="viewer\viewer_menu.cpp">
+      <Filter>Source Files\viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="studio\studio_event.cpp">
+      <Filter>Source Files\studio</Filter>
+    </ClCompile>
+    <ClCompile Include="studio\studio_texture.cpp">
+      <Filter>Source Files\studio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\imgui\imgui.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_impl_opengl2.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_internal.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imstb_rectpack.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imstb_textedit.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imstb_truetype.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imconfig.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mathlib.h">
+      <Filter>Source Files\include</Filter>
+    </ClInclude>
+    <ClInclude Include="studio\studio.h">
+      <Filter>Source Files\studio</Filter>
+    </ClInclude>
+    <ClInclude Include="studio\studio_event.h">
+      <Filter>Source Files\studio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui\imgui_impl_glfw.h">
+      <Filter>Source Files\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="studio\studio_model.h">
+      <Filter>Source Files\studio</Filter>
+    </ClInclude>
+    <ClInclude Include="viewer\viewer.h">
+      <Filter>Source Files\viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="launcher\main_display.h">
+      <Filter>Source Files\launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLFW\glfw3.h">
+      <Filter>Source Files\include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLFW\glfw3native.h">
+      <Filter>Source Files\include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="launcher\menu.h">
+      <Filter>Source Files\launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="launcher\main.h">
+      <Filter>Source Files\launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="studio\studio_activity.h">
+      <Filter>Source Files\studio</Filter>
+    </ClInclude>
+    <ClInclude Include="studio\studio_activitymap.h">
+      <Filter>Source Files\studio</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\editor.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
