@@ -8,7 +8,7 @@ please go over to the releases tab to get a new version!
 
 controls
 --------
-mouse:
+**mouse:**
 
 left mouse button - rotate
 
@@ -17,7 +17,7 @@ right mouse button - zoom
 middle mouse button - pan
 
 
-keyboard:
+**keyboard:**
 
 page up - next sequence
 
