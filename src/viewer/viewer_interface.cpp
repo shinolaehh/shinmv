@@ -8,6 +8,7 @@
 #include "viewer.h"
 
 float ViewerInterface::prev;
+bool ViewerInterface::viewmodel = false;
 
 StudioModel ViewerInterface::model;
 
@@ -74,7 +75,8 @@ void ViewerInterface::Init(char* modelname)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(50, 1, 0.1, 10);
+	// gluPerspective(50, 1, 0.1, 10);
+	gluPerspective(90, 1, 0.00001, 1024);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -108,7 +110,7 @@ void ViewerInterface::CursorPosCallback(GLFWwindow* window, double xpos, double 
 {
 	// printf("xpos: %i, ypos: %i\n", ox, oy);
 
-	if (mot_press)
+	if (mot_press && !viewmodel)
 		Motion(xpos, ypos);
 
 	ox = xpos, oy = ypos;
@@ -116,7 +118,7 @@ void ViewerInterface::CursorPosCallback(GLFWwindow* window, double xpos, double 
 
 void ViewerInterface::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (action == GLFW_PRESS)
+	if (action == GLFW_PRESS && !viewmodel)
 	{
 		mot_press = true;
 
@@ -149,15 +151,20 @@ void ViewerInterface::KeyCallback(GLFWwindow* window, int key, int scancode, int
 		}
 
 		//
-		// V - draw ground
-		//
-
-		//
 		// O - view relative to the origin
 		//
 		case GLFW_KEY_O:
 		{
 			transx = 0, transy = 0, transz = -1;
+			break;
+		}
+
+		//
+		// P - toggle player viewmodel view
+		//
+		case GLFW_KEY_P:
+		{
+			ModifyView();
 			break;
 		}
 

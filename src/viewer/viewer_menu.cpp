@@ -1,4 +1,6 @@
 
+#include <cmath>
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl2.h"
@@ -13,12 +15,14 @@ void ViewerInterface::Menu(void)
 {
 	Menu_ModelInfo();
 	Menu_SequenceInfo();
+	Menu_TextureInfo();
 }
 
 void ViewerInterface::Menu_Bar(void)
 {
 	ImGui::Checkbox("Model Info", &Show_ModelInfo);
 	ImGui::Checkbox("Sequence Info", &Show_SequenceInfo);
+	ImGui::Checkbox("Texture Info", &Show_TextureInfo);
 }
 
 void ViewerInterface::Preferences(void)
@@ -26,9 +30,13 @@ void ViewerInterface::Preferences(void)
 	ImGui::Text("Model Viewer");
 
 	bool newfilter = model.IsFiltered();
+	bool newview = viewmodel;
 
 	if (ImGui::Checkbox("Texture Filtering", &newfilter))
 		model.ModifyFilter();
+
+	// NOTE: for the life of me this just doesnt work yet
+	// if (ImGui::Checkbox("Viewmodel View", &newview)) {}
 }
 
 void ViewerInterface::ModelInfo(void)
@@ -124,6 +132,44 @@ void ViewerInterface::ModelInfo(void)
 		ImGui::EndCombo();
 	}
 
+	//
+	// skingroup selector
+	//
+	studiohdr_t* texhdr;
+
+	if (header->textureindex == 0)
+		texhdr = model.ExposeTextureHeader();
+	else
+		texhdr = header;
+
+	mstudiotexture_t* tex = (mstudiotexture_t*)((byte*)texhdr + texhdr->textureindex);
+
+	if (texhdr->numskinfamilies > 1)
+	{
+		ImGui::Text("Number of Skins: %i", texhdr->numskinfamilies);
+
+		if (ImGui::BeginCombo("       ", "Skins"))
+		{
+			for (int i = 0; i < texhdr->numskinfamilies; i++)
+			{
+				const bool is_selected = (skin_current == i);
+
+				std::string title = "Skin " + std::to_string(i);
+
+				if (ImGui::Selectable(title.c_str(), is_selected))
+					skin_current = i;
+
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
+
+				if (ImGui::IsItemDeactivatedAfterEdit())
+					model.SetSkin(skin_current);
+			}
+
+			ImGui::EndCombo();
+		}
+	}
+
 	ImGui::Separator();
 	ImGui::NewLine();
 	ImGui::Separator();
@@ -216,8 +262,8 @@ void ViewerInterface::SequenceInfo(void)
 	// window flags
 	//
 	ImGui::SetNextWindowPos(ImVec2(5, 25), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(300, 380), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSizeConstraints(ImVec2(300, 325), ImVec2(300, (display_h - 35)));
+	ImGui::SetNextWindowSize(ImVec2(325, 380), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(325, 325), ImVec2(325, (display_h - 35)));
 
 	ImGui::Begin("Sequence Info", &Show_SequenceInfo);
 
@@ -253,7 +299,7 @@ void ViewerInterface::SequenceInfo(void)
 	// ImGui::Text("Number of Pivots: %i", seqdata->numpivots);
 
 	int newframe = model.GetFrame();
-	ImGui::SliderInt("  ", &newframe, 0, seqdata->numframes, "Frame %d");
+	ImGui::SliderInt("  ", &newframe, 0, seqdata->numframes - 1, "Frame %d");
 
 	if (ImGui::IsItemEdited())
 		model.SetFrame(newframe);
@@ -418,6 +464,139 @@ void ViewerInterface::SequenceInfo(void)
 	}
 	else
 		ImGui::Separator();
+
+	ImGui::End();
+}
+
+void ViewerInterface::TextureInfo(void)
+{
+	studiohdr_t* header = model.ExposeTextureHeader();
+	mstudiotexture_t* tex = (mstudiotexture_t*)((byte*)header + header->textureindex);
+	mstudiotexture_t* skin = (mstudiotexture_t*)((byte*)header + header->skinindex);
+
+	//
+	// window flags
+	//
+	ImGui::SetNextWindowPos(ImVec2(15, 50), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(325, 380), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSizeConstraints(ImVec2(325, 380), ImVec2(display_w, display_h));
+
+	ImGui::Begin("Texture Info", &Show_TextureInfo);
+
+	//
+	// general model texture information
+	//
+	ImGui::Text("Number of Textures: %i", header->numtextures);
+
+	ImGui::Separator();
+
+	//
+	// specific texture information
+	//
+	static int tex_number = 0;
+	int tex_width = tex[tex_number].width;
+	int tex_height = tex[tex_number].height;
+
+	ImGui::Text("Name: %s", tex[tex_number].name);
+	ImGui::Text("Size: %d x %d", tex_width, tex_height);
+	ImGui::SliderInt("     ", &tex_number, 0, header->numtextures - 1, "Texture %d");
+
+	ImGui::Separator();
+
+#if 0
+	//
+	// skingroup selector
+	// NOTE: THIS HAS MOVED TO MODELINFO
+	//
+	ImGui::Text("Number of Skingroups: %i", header->numskinfamilies);
+
+	if (header->numskinfamilies > 1 && ImGui::BeginCombo("       ", "Skingroups"))
+	{
+		for (int i = 0; i < header->numskinfamilies; i++)
+		{
+			const bool is_selected = (skin_current == i);
+			mstudiotexture_t* skin_tex = tex + (i * header->numskinref);
+
+			std::string title = "Skin " + std::to_string(i);
+
+			if (ImGui::Selectable(title.c_str(), is_selected))
+				skin_current = i;
+
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+
+			if (ImGui::IsItemDeactivatedAfterEdit())
+				model.SetSkin(skin_current);
+		}
+		ImGui::EndCombo();
+	}
+
+	ImGui::Separator();
+#endif
+
+	//
+	// texture flags
+	// TODO: use checkboxes!!
+	//
+	int flagcount = model.FindTextureFlags(tex[tex_number].flags);
+
+	if (flagcount > 0)
+	{
+		ImGui::Text("Texture Flags:");
+
+		for (int i = 0; i < flagcount; i++)
+		{
+			ImGui::Text(" ");
+			ImGui::SameLine();
+			ImGui::Text(flag_tex_map[flag_tex_map_element[i]].name);
+		}
+	}
+	else
+		ImGui::Text("Texture Flags: None");
+
+	ImGui::Separator();
+
+	//
+	// scale settings
+	// oh god, this code is messy....
+	//
+	static float tex_scale = 1.0f;
+	std::string scale_text = std::to_string(tex_scale);
+
+	ImGui::Text("Scale:");
+	ImGui::SliderFloat("    ", &tex_scale, 0.5, 5, scale_text.c_str());
+
+	//
+	// (^ x) for more decimal values
+	// x = power of / place to put decimal
+	//
+	const int scale_factor = 10 ^ 2;
+
+	if (ImGui::IsItemEdited() && tex_scale > 0.5)
+		tex_scale = std::round(tex_scale * scale_factor) / scale_factor;
+
+	if (ImGui::Button("Reset Scale (1.0)")) // Regular Scale
+		tex_scale = 1.0;
+
+	/*
+	ImGui::SameLine();
+
+	if (ImGui::Button("Editor Scale (0.5)"))
+		tex_scale = 0.5;
+	*/
+
+	ImGui::Separator();
+
+	//
+	// texture data
+	// NOTE: ExposeTextureData is a yucky hack!!!
+	// TODO: make it a one-off call?? its a necessary evil but it shouldn't occur
+	// every single time the user wants to open the fucking texture info tab
+	//
+	model.ExposeTextureData();
+
+	GLuint* tex_data = (GLuint*)tex[tex_number].index;
+	ImGui::Image((void*)(intptr_t)tex_data, ImVec2(tex_width * tex_scale, tex_height * tex_scale));
 
 	ImGui::End();
 }

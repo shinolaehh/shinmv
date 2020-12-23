@@ -36,6 +36,9 @@ public:
 	void SequenceInfo(void);
 	MENU_DEFINE(SequenceInfo, SequenceInfo(), true);
 
+	void TextureInfo(void);
+	MENU_DEFINE(TextureInfo, TextureInfo(), false);
+
 	//////////////////////////////////////////////////////////////////
 
 private:
@@ -120,7 +123,7 @@ private:
 			oldtx = transx, oldty = transy, oldtz = transz;
 			oldrx = rotx, oldry = roty, oldrz = rotz;
 
-			transx = 0, transy = 0, transz = -0.125;
+			transx = 0, transy = 0, transz = 0;
 			rotx = 90, roty = 180, rotz = -90;
 
 			viewmodel = true;
@@ -183,10 +186,11 @@ private:
 	int increment = model.GetSequence();
 
 	//
-	// current bodygroup + submodel
+	// current bodygroup, submodel + skin
 	//
 	int body_current = 0;
 	int sub_current = 0;
+	int skin_current = 0;
 
 	//
 	// current blend angle + controller value
@@ -197,7 +201,7 @@ private:
 	//
 	// old view position + angles + viewmodel
 	//
-	bool viewmodel = false;
+	static bool viewmodel;
 
 	float oldtx, oldty, oldtz,
 		oldrx, oldry, oldrz;

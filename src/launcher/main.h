@@ -9,7 +9,7 @@
 #include "viewer.h"
 #include "main_display.h"
 
-#define MV_VERSION			"Alpha 1"
+#define MV_VERSION			"Alpha 2"
 
 static ViewerInterface viewer;
 static Display_Main disp_main;

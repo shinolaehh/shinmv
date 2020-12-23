@@ -24,82 +24,6 @@
 #include "studio.h"
 #include "studio_model.h"
 
-////////////////////////////////////////////////////////////////////////
-
-static int g_texnum = 1;
-
-void StudioModel::UploadTexture(mstudiotexture_t *ptexture, byte *data, byte *pal)
-{
-	// unsigned *in, int inwidth, int inheight, unsigned *out,  int outwidth, int outheight;
-	int outwidth, outheight;
-	int		i, j;
-	int		row1[256], row2[256], col1[256], col2[256];
-	byte	*pix1, *pix2, *pix3, *pix4;
-	byte	*tex, *out;
-
-	// convert texture to power of 2
-	for (outwidth = 1; outwidth < ptexture->width; outwidth <<= 1)
-		;
-
-	if (outwidth > 256)
-		outwidth = 256;
-
-	for (outheight = 1; outheight < ptexture->height; outheight <<= 1)
-		;
-
-	if (outheight > 256)
-		outheight = 256;
-
-	tex = out = (byte *)malloc( outwidth * outheight * 4);
-
-	for (i = 0; i < outwidth; i++)
-	{
-		col1[i] = (i + 0.25) * (ptexture->width / (float)outwidth);
-		col2[i] = (i + 0.75) * (ptexture->width / (float)outwidth);
-	}
-
-	for (i = 0; i < outheight; i++)
-	{
-		row1[i] = (int)((i + 0.25) * (ptexture->height / (float)outheight)) * ptexture->width;
-		row2[i] = (int)((i + 0.75) * (ptexture->height / (float)outheight)) * ptexture->width;
-	}
-
-	// scale down and convert to 32bit RGB
-	for (i=0 ; i<outheight ; i++)
-	{
-		for (j=0 ; j<outwidth ; j++, out += 4)
-		{
-			pix1 = &pal[data[row1[i] + col1[j]] * 3];
-			pix2 = &pal[data[row1[i] + col2[j]] * 3];
-			pix3 = &pal[data[row2[i] + col1[j]] * 3];
-			pix4 = &pal[data[row2[i] + col2[j]] * 3];
-
-			out[0] = (pix1[0] + pix2[0] + pix3[0] + pix4[0])>>2;
-			out[1] = (pix1[1] + pix2[1] + pix3[1] + pix4[1])>>2;
-			out[2] = (pix1[2] + pix2[2] + pix3[2] + pix4[2])>>2;
-			out[3] = 0xFF;
-		}
-	}
-
-	glBindTexture( GL_TEXTURE_2D, g_texnum );		
-	glTexImage2D( GL_TEXTURE_2D, 0, 3/*??*/, outwidth, outheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex );
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	// glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-	// ptexture->width = outwidth;
-	// ptexture->height = outheight;
-	ptexture->index = g_texnum;
-
-	g_texnum++;
-
-	free( tex );
-}
-
-
-
-
 studiohdr_t *StudioModel::LoadModel( char *modelname )
 {
 	FILE *fp;
@@ -134,7 +58,7 @@ studiohdr_t *StudioModel::LoadModel( char *modelname )
 		{
 			// strcpy( name, mod->name );
 			// strcpy( name, ptexture[i].name );
-			UploadTexture( &ptexture[i], pin + ptexture[i].index, pin + ptexture[i].width * ptexture[i].height + ptexture[i].index );
+			UploadTexture( &ptexture[i], pin + ptexture[i].index, pin + ptexture[i].width * ptexture[i].height + ptexture[i].index, i );
 		}
 	}
 
@@ -412,19 +336,6 @@ int StudioModel::SetBodygroup( int iGroup, int iValue )
 		return iCurrent;
 
 	m_bodynum = (m_bodynum - (iCurrent * pbodypart->base) + (iValue * pbodypart->base));
-
-	return iValue;
-}
-
-
-int StudioModel::SetSkin( int iValue )
-{
-	if (iValue < m_pstudiohdr->numskinfamilies)
-	{
-		return m_skinnum;
-	}
-
-	m_skinnum = iValue;
 
 	return iValue;
 }

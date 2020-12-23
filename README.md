@@ -1,10 +1,10 @@
 shinola's model viewer
 ======================
-a modern goldsource modelviewer; with glfw and imgui as its backends
+a modern goldsource modelviewer; with glfw and imgui as its backends!
 
-please go over to the releases tab to get a new version!
+**please go over to the releases tab to get the new version!**
 
-**note: this program is also very in-development. many things are placeholder, and it requires you to drag a model on top of the exe for it to run. please expect bugs and report them + give feedback in the 'issues' section!**
+**also note that this program is also very in-development. many things are placeholder, and it requires you to drag a model on top of the exe for it to run. please expect bugs and report them + give feedback in the 'issues' section!**
 
 controls
 --------
@@ -29,13 +29,20 @@ home - return to default view
 
 f - toggle texture filtering
 
+p - toggle using viewmodel origin
+
 o - view relative to the origin
 
 features
 --------
-- the ability to now view sequence events, activities, and flags for bone controllers, sequences and blends
+- the ability to now view:
+  - sequence events + flags
+  - activities + activity flags
+  - bone controller flags
+  - blend flags
 - toggle texture filtering for the models (at last!)
 - uses glfw rather than the disgusting monstrosity known as glut
+- toggling between viewmodel view and regular view
 
 
 license
@@ -44,12 +51,12 @@ this program is released under **the half-life 1 sdk license.** please check `LI
 
 compiling
 ---------
-currently, this program is *windows only and requires visual studio 2019.* however, linux support is planned and it's pretty portable besides a handful of windows functions
+currently, this program is *windows only and requires visual studio 2019.* however, linux support is planned and it's pretty portable besides a handful of windows functions. also!! this is **currently designed for x86, amd64 builds will come soon enough**
 
-also!! this is **currently designed for x86, amd64 builds will come soon enough**
 
 this program also requires glfw and imgui. the build instructions are:
 
 **glfw:** put the `include/glfw/` folder from your win32 zip (ie `glfw-3.3.2.bin.WIN32.zip`) in this repo's `./src/include/`, and the libraries from the `lib-vc2019` folder in the glfw zip in `./src/lib/` of this repo
+
 
 **imgui:** put the imgui files from `imgui-master.zip` into the `./src/include/imgui/` directory in your local copy of this repo. it also requires `imgui_impl_opengl2.xxx` and `imgui_impl_glfw.xxx` from the `examples/example_glfw_opengl2` folder **into the same folder as the other imgui files in the model viewer repo.**

@@ -328,14 +328,7 @@ typedef struct
 } mstudiotrivert_t;
 #endif
 
-// lighting options
-#define STUDIO_NF_FLATSHADE		0x0001
-#define STUDIO_NF_CHROME		0x0002
-#define STUDIO_NF_FULLBRIGHT	0x0004
-#define STUDIO_NF_NOMIPS        0x0008
-#define STUDIO_NF_ALPHA         0x0010
-#define STUDIO_NF_ADDITIVE      0x0020
-#define STUDIO_NF_MASKED        0x0040
+//////////////////////////////////////////////////////////////////
 
 // motion flags
 #define STUDIO_X		0x0001
@@ -356,8 +349,6 @@ typedef struct
 #define STUDIO_TYPES	0x7FFF
 #define STUDIO_RLOOP	0x8000	// controller that wraps shortest distance
 
-//////////////////////////////////////////////////////////////////
-
 #define STUDIO_NUMFLAG	17
 
 typedef struct {
@@ -367,6 +358,22 @@ typedef struct {
 
 extern flag_map_t flag_map[STUDIO_NUMFLAG];
 extern int flag_map_element[STUDIO_NUMFLAG];
+
+//////////////////////////////////////////////////////////////////
+
+// texture options
+#define STUDIO_NF_FLATSHADE		0x0001
+#define STUDIO_NF_CHROME		0x0002
+#define STUDIO_NF_FULLBRIGHT	0x0004
+#define STUDIO_NF_NOMIPS        0x0008
+#define STUDIO_NF_ALPHA         0x0010
+#define STUDIO_NF_ADDITIVE      0x0020
+#define STUDIO_NF_MASKED        0x0040
+
+#define STUDIO_NF_NUMFLAG		7
+
+extern flag_map_t flag_tex_map[STUDIO_NF_NUMFLAG];
+extern int flag_tex_map_element[STUDIO_NF_NUMFLAG];
 
 //////////////////////////////////////////////////////////////////
 

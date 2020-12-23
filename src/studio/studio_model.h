@@ -46,6 +46,11 @@ public:
 	void					ModifyPause( void );
 	int						FindFrameMotionFlags( int variable );
 
+	studiohdr_t*			ExposeTextureHeader(void);
+	void					ExposeTextureData(void);
+	int						SetSkin(int iValue);
+	int						FindTextureFlags(int variable);
+	
 	bool					IsFiltered( void );
 	void					ModifyFilter( void );
 
@@ -53,9 +58,6 @@ public:
 	float					RoundController( int iController, float flValue, bool bDegrees );
 	float					SetMouth( float flValue );
 	int						SetBodygroup( int iGroup, int iValue );
-	int						SetSkin( int iValue );
-
-	void					DrawTexture( int iTexture );
 
 private:
 	// entity settings
@@ -101,8 +103,7 @@ private:
 	void					SetupLighting( void );
 
 	void					SetupModel ( int bodypart );
-
-	void					UploadTexture( mstudiotexture_t *ptexture, byte *data, byte *pal );
+	void					UploadTexture(mstudiotexture_t* ptexture, byte* data, byte* pal, int g_texnum);
 };
 
 extern vec3_t g_vright;		// needs to be set to viewer's right in order for chrome to work
